@@ -1,4 +1,4 @@
-FROM python: 3.10
+FROM python:3.10
 
 COPY . /fast_api
 WORKDIR /fast_api 
