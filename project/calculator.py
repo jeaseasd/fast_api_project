@@ -1,4 +1,5 @@
 from model import GPA
+from decimal import Decimal, ROUND_HALF_UP
 
 def grade_to_point(grade: str) -> float:
     grade_points = {
@@ -26,12 +27,14 @@ def calculate_gpa(student_data: GPA) -> dict:
         total_grade_points += credits * grade_point
 
     gpa = total_grade_points / total_credits if total_credits > 0 else 0
+    # Decimal을 사용한 정확한 반올림
+    rounded_gpa = float(Decimal(str(gpa)).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP))
 
     return {
         "student_summary": {
             "student_id": student_data.student_id,
             "name": student_data.name,
-            "gpa": round(gpa, 2),
+            "gpa": rounded_gpa,
             "total_credits": total_credits
         }
     }
